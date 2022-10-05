@@ -7,6 +7,5 @@ type GetProductByIdHandler struct {
 }
 
 func (handler *GetProductByIdHandler) Exec(id int) (product products.Product, err error) {
-	product, err = handler.Products.GetById(id)
-	return
+	return handler.Products.GetById(id)
 }

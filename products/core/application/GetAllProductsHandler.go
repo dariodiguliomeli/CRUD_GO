@@ -7,6 +7,5 @@ type GetAllProductsHandler struct {
 }
 
 func (handler *GetAllProductsHandler) Exec() (products []products.Product) {
-	products = handler.Products.GetAll()
-	return products
+	return handler.Products.GetAll()
 }

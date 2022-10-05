@@ -7,9 +7,5 @@ type DeleteProductHandler struct {
 }
 
 func (handler *DeleteProductHandler) Exec(id int) (deletedId int, err error) {
-	deletedId, err = handler.Products.Delete(id)
-	if err != nil {
-		return
-	}
-	return
+	return handler.Products.Delete(id)
 }

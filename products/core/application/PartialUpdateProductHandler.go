@@ -29,9 +29,5 @@ func (handler *PartialUpdateProductHandler) Exec(id int, name string, descriptio
 		product.Price = price
 	}
 	product.UpdatedAt = time.Now()
-	updatedId, err = handler.Products.Update(product)
-	if err != nil {
-		return
-	}
-	return
+	return handler.Products.Update(product)
 }
