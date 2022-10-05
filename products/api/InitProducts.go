@@ -11,6 +11,7 @@ func Init(router *gin.Engine, products products.Products) {
 	productsRouter := router.Group("/products")
 	{
 		productsRouter.POST("/", initCreateProductHandler(products))
+		productsRouter.GET("/", initGetProductHandler(products))
 	}
 }
 
@@ -31,5 +32,12 @@ func initCreateProductHandler(products products.Products) func(context *gin.Cont
 		id := handler.Exec(request.Name, request.Description, request.Price)
 		context.JSON(http.StatusCreated, gin.H{"Id": id})
 		return
+	}
+}
+
+func initGetProductHandler(products products.Products) func(context *gin.Context) {
+	return func(context *gin.Context) {
+		handler := application.GetAllProductsHandler{Products: products}
+		context.JSON(http.StatusOK, gin.H{"Products": handler.Exec()})
 	}
 }
