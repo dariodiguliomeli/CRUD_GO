@@ -10,6 +10,11 @@ func main() {
 	productsRepository := products.InMemoryProducts{}
 	router := gin.Default()
 	api.Init(router, &productsRepository)
+	router.GET("/status", func(context *gin.Context) {
+		context.JSON(200, gin.H{
+			"status": "ok",
+		})
+	})
 	err := router.Run()
 	if err != nil {
 		panic(err)
