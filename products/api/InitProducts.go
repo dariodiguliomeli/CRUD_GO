@@ -87,7 +87,7 @@ func initUpdateProductHandler(products products.Products) func(context *gin.Cont
 		if err := context.BindJSON(&request); err != nil {
 			context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		}
-		handler := application.UpdateProductHandler{Products: products}
+		handler := application.PartialUpdateProductHandler{Products: products}
 		id, err := strconv.Atoi(context.Param("id"))
 		if err != nil {
 			context.JSON(http.StatusBadRequest, gin.H{"Error": "id param not found"})

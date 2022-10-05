@@ -6,11 +6,11 @@ import (
 	"time"
 )
 
-type UpdateProductHandler struct {
+type PartialUpdateProductHandler struct {
 	Products products.Products
 }
 
-func (handler *UpdateProductHandler) Exec(id int, name string, description string, price float64) (updatedId int, err error) {
+func (handler *PartialUpdateProductHandler) Exec(id int, name string, description string, price float64) (updatedId int, err error) {
 	product, err := handler.Products.GetById(id)
 	if err != nil {
 		return
