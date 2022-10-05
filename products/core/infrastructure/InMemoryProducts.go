@@ -36,9 +36,15 @@ func (repository *InMemoryProducts) GetAll() (products []products.Product) {
 	return repository.Products
 }
 
-func (repository *InMemoryProducts) Delete(id int) (idDeleted int) {
-	//TODO implement me
-	panic("implement me")
+func (repository *InMemoryProducts) Delete(id int) (idDeleted int, err error) {
+	for i, item := range repository.Products {
+		if item.Id == id {
+			repository.Products = append(repository.Products[:i], repository.Products[i+1:]...)
+			return id, nil
+		}
+	}
+	err = errors.New("product not found")
+	return
 }
 
 func (repository *InMemoryProducts) Update(product products.Product) (updatedId int, err error) {

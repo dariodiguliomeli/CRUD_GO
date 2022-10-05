@@ -17,6 +17,7 @@ func Init(router *gin.Engine, products products.Products) {
 		productsRouter.GET("/", initGetProductHandler(products))
 		productsRouter.GET("/:id", initGetProductByIdHandler(products))
 		productsRouter.PATCH("/:id", initUpdateProductHandler(products))
+		productsRouter.DELETE("/:id", initDeleteProductByIdHandler(products))
 	}
 }
 
@@ -98,5 +99,21 @@ func initUpdateProductHandler(products products.Products) func(context *gin.Cont
 			return
 		}
 		context.JSON(http.StatusOK, gin.H{"Id": id})
+	}
+}
+
+func initDeleteProductByIdHandler(products products.Products) func(context *gin.Context) {
+	return func(context *gin.Context) {
+		id, err := strconv.Atoi(context.Param("id"))
+		if err != nil {
+			context.JSON(http.StatusBadRequest, gin.H{"Error": "id param not found"})
+			return
+		}
+		handler := application.DeleteProductHandler{Products: products}
+		deletedId, err := handler.Exec(id)
+		if err != nil {
+			context.JSON(http.StatusNotFound, gin.H{"Error": err.Error()})
+		}
+		context.JSON(http.StatusOK, gin.H{"Id": deletedId})
 	}
 }
