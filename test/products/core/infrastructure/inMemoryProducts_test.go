@@ -10,7 +10,7 @@ import (
 func TestNextId(t *testing.T) {
 	got := repository.NextId()
 
-	assert(t, got, 1)
+	Assert(t, got, 1)
 }
 
 func TestGetById(t *testing.T) {
@@ -18,8 +18,18 @@ func TestGetById(t *testing.T) {
 
 	got, _ := repository.GetById(product.Id)
 
-	assert(t, got, product)
+	Assert(t, got, product)
+}
 
+func TestGetAll(t *testing.T) {
+	setupSuite()
+
+	repository.Add(product)
+	repository.Add(product)
+
+	products := repository.GetAll()
+
+	Assert(t, len(products), 2)
 }
 
 var repository = infrastructure.InMemoryProducts{}
@@ -32,8 +42,6 @@ var product = domain.Product{
 	UpdatedAt:   time.Now(),
 }
 
-func assert(t *testing.T, got any, want any) {
-	if got != want {
-		t.Errorf("NextId() = %v, want %v", got, want)
-	}
+func setupSuite() {
+	repository = infrastructure.InMemoryProducts{}
 }
