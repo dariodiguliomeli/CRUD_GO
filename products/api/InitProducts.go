@@ -3,8 +3,11 @@ package api
 import (
 	"CRUD_GO/products/core/application"
 	"CRUD_GO/products/core/domain"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
+	"time"
 )
 
 func Init(router *gin.Engine, products products.Products) {
@@ -12,6 +15,7 @@ func Init(router *gin.Engine, products products.Products) {
 	{
 		productsRouter.POST("/", initCreateProductHandler(products))
 		productsRouter.GET("/", initGetProductHandler(products))
+		productsRouter.GET("/:id", initGetProductByIdHandler(products))
 	}
 }
 
@@ -19,6 +23,15 @@ type CreateProductRequest struct {
 	Name        string  `json:"name" binding:"required"`
 	Description string  `json:"description" binding:"required"`
 	Price       float64 `json:"price" binding:"required"`
+}
+
+type ProductResponse struct {
+	ID          int       `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	Price       float64   `json:"price"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
 }
 
 func initCreateProductHandler(products products.Products) func(context *gin.Context) {
@@ -39,5 +52,23 @@ func initGetProductHandler(products products.Products) func(context *gin.Context
 	return func(context *gin.Context) {
 		handler := application.GetAllProductsHandler{Products: products}
 		context.JSON(http.StatusOK, gin.H{"Products": handler.Exec()})
+	}
+}
+
+func initGetProductByIdHandler(products products.Products) func(context *gin.Context) {
+	return func(context *gin.Context) {
+		id, err := strconv.Atoi(context.Param("id"))
+		if err != nil {
+			context.JSON(http.StatusBadRequest, gin.H{"Error": "id param not found"})
+			return
+		}
+		handler := application.GetProductByIdHandler{Products: products}
+		product, err := handler.Exec(id)
+		fmt.Println(product)
+		if err != nil {
+			context.JSON(http.StatusNotFound, gin.H{"Error": err.Error()})
+			return
+		}
+		context.JSON(http.StatusOK, gin.H{"Product": product})
 	}
 }

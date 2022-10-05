@@ -1,6 +1,9 @@
 package products
 
-import products "CRUD_GO/products/core/domain"
+import (
+	products "CRUD_GO/products/core/domain"
+	"errors"
+)
 
 var nextId = 1
 
@@ -19,9 +22,14 @@ func (repository *InMemoryProducts) Add(product products.Product) (id int) {
 	return product.Id
 }
 
-func (repository *InMemoryProducts) GetById(id int) (product products.Product) {
-	//TODO implement me
-	panic("implement me")
+func (repository *InMemoryProducts) GetById(id int) (product products.Product, err error) {
+	for _, item := range repository.Products {
+		if item.Id == id {
+			return item, nil
+		}
+	}
+	err = errors.New("product not found")
+	return
 }
 
 func (repository *InMemoryProducts) GetAll() (products []products.Product) {
