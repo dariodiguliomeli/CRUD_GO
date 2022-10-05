@@ -1,8 +1,8 @@
 package main
 
 import (
-	"CRUD_GO/products/api"
-	"CRUD_GO/products/core/infrastructure"
+	"CRUD_GO/src/products/api"
+	"CRUD_GO/src/products/core/infrastructure"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"

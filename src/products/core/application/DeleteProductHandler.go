@@ -1,6 +1,8 @@
 package application
 
-import products "CRUD_GO/products/core/domain"
+import (
+	"CRUD_GO/src/products/core/domain"
+)
 
 type DeleteProductHandler struct {
 	Products products.Products

@@ -1,7 +1,7 @@
 package application
 
 import (
-	"CRUD_GO/products/core/domain"
+	"CRUD_GO/src/products/core/domain"
 	"time"
 )
 

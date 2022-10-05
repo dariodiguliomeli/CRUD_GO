@@ -1,7 +1,7 @@
 package api
 
 import (
-	"CRUD_GO/products/core/domain"
+	products "CRUD_GO/src/products/core/domain"
 	"github.com/gin-gonic/gin"
 )
 

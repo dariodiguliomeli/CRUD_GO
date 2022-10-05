@@ -1,7 +1,7 @@
 package products
 
 import (
-	products "CRUD_GO/products/core/domain"
+	"CRUD_GO/src/products/core/domain"
 	"errors"
 )
 

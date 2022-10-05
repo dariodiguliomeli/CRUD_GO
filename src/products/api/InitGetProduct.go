@@ -1,8 +1,8 @@
 package api
 
 import (
-	"CRUD_GO/products/core/application"
-	"CRUD_GO/products/core/domain"
+	application2 "CRUD_GO/src/products/core/application"
+	"CRUD_GO/src/products/core/domain"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -20,7 +20,7 @@ type ProductResponse struct {
 
 func initGetProductsHandler(products products.Products) func(context *gin.Context) {
 	return func(context *gin.Context) {
-		handler := application.GetAllProductsHandler{Products: products}
+		handler := application2.GetAllProductsHandler{Products: products}
 		productsFound := handler.Exec()
 		var productsToReturn []ProductResponse
 		for _, product := range productsFound {
@@ -37,7 +37,7 @@ func initGetProductByIdHandler(products products.Products) func(context *gin.Con
 			context.JSON(http.StatusBadRequest, gin.H{"Error": "id param not found"})
 			return
 		}
-		handler := application.GetProductByIdHandler{Products: products}
+		handler := application2.GetProductByIdHandler{Products: products}
 		product, err := handler.Exec(id)
 		if err != nil {
 			context.JSON(http.StatusNotFound, gin.H{"Error": err.Error()})
