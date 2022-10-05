@@ -6,5 +6,5 @@ type Products interface {
 	GetAll() (products []Product)
 	Delete(id int) (idDeleted int)
 	Add(product Product) (id int)
-	Update(id int, name string, description string, price float64) (idUpdated int)
+	Update(product Product) (updatedId int, err error)
 }

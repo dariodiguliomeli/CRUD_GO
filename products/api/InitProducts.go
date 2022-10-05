@@ -16,6 +16,7 @@ func Init(router *gin.Engine, products products.Products) {
 		productsRouter.POST("/", initCreateProductHandler(products))
 		productsRouter.GET("/", initGetProductHandler(products))
 		productsRouter.GET("/:id", initGetProductByIdHandler(products))
+		productsRouter.PATCH("/:id", initUpdateProductHandler(products))
 	}
 }
 
@@ -32,6 +33,12 @@ type ProductResponse struct {
 	Price       float64   `json:"price"`
 	CreatedAt   time.Time `json:"createdAt"`
 	UpdatedAt   time.Time `json:"updatedAt"`
+}
+
+type UpdateProductRequest struct {
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Price       float64 `json:"price"`
 }
 
 func initCreateProductHandler(products products.Products) func(context *gin.Context) {
@@ -70,5 +77,26 @@ func initGetProductByIdHandler(products products.Products) func(context *gin.Con
 			return
 		}
 		context.JSON(http.StatusOK, gin.H{"Product": product})
+	}
+}
+
+func initUpdateProductHandler(products products.Products) func(context *gin.Context) {
+	return func(context *gin.Context) {
+		var request UpdateProductRequest
+		if err := context.BindJSON(&request); err != nil {
+			context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		}
+		handler := application.UpdateProductHandler{Products: products}
+		id, err := strconv.Atoi(context.Param("id"))
+		if err != nil {
+			context.JSON(http.StatusBadRequest, gin.H{"Error": "id param not found"})
+			return
+		}
+		id, err = handler.Exec(id, request.Name, request.Description, request.Price)
+		if err != nil {
+			context.JSON(http.StatusNotFound, gin.H{"Error": err.Error()})
+			return
+		}
+		context.JSON(http.StatusOK, gin.H{"Id": id})
 	}
 }

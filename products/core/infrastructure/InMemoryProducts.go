@@ -41,7 +41,13 @@ func (repository *InMemoryProducts) Delete(id int) (idDeleted int) {
 	panic("implement me")
 }
 
-func (repository *InMemoryProducts) Update(id int, name string, description string, price float64) (idUpdated int) {
-	//TODO implement me
-	panic("implement me")
+func (repository *InMemoryProducts) Update(product products.Product) (updatedId int, err error) {
+	for i, item := range repository.Products {
+		if item.Id == product.Id {
+			repository.Products[i] = product
+			return product.Id, nil
+		}
+	}
+	err = errors.New("product not found")
+	return
 }
