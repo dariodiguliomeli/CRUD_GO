@@ -10,12 +10,25 @@ import (
 func TestCreateProductHandler(t *testing.T) {
 	createdId := handler.Exec("Some name", "Some description", 23.45)
 
-	productSaved, _ := products.GetById(createdId)
+	productSaved, _ := repository.GetById(createdId)
 	assert.Equal(t, productSaved.Id, createdId)
 	assert.Equal(t, productSaved.Name, "Some name")
 	assert.Equal(t, productSaved.Description, "Some description")
 	assert.Equal(t, productSaved.Price, 23.45)
 }
 
-var products = infrastructure.InMemoryProductsPersister{}
-var handler = application.CreateProductHandler{Products: &products}
+func TestCreateProductHandlerSequentialId(t *testing.T) {
+	setupSuite()
+	firstId := handler.Exec("Some name", "Some description", 23.45)
+	secondId := handler.Exec("Some name", "Some description", 23.45)
+
+	assert.Equal(t, firstId, 1)
+	assert.Equal(t, secondId, 2)
+}
+
+func setupSuite() {
+	repository = infrastructure.InMemoryProductsPersister{}
+}
+
+var repository = infrastructure.InMemoryProductsPersister{}
+var handler = application.CreateProductHandler{Products: &repository}

@@ -5,16 +5,21 @@ import (
 	"errors"
 )
 
-var nextId = 1
-
 type InMemoryProductsPersister struct {
 	Products []products.Product
+	nextId   int
+}
+
+func (repository *InMemoryProductsPersister) New() InMemoryProductsPersister {
+	return InMemoryProductsPersister{
+		Products: make([]products.Product, 0),
+		nextId:   0,
+	}
 }
 
 func (repository *InMemoryProductsPersister) NextId() (id int) {
-	id = nextId
-	nextId++
-	return
+	repository.nextId++
+	return repository.nextId
 }
 
 func (repository *InMemoryProductsPersister) Add(product products.Product) (id int) {

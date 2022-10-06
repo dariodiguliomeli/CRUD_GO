@@ -66,7 +66,8 @@ func TestUpdate(t *testing.T) {
 	assert.Equal(t, updatedProduct.Name, "Plato")
 }
 
-var repository = infrastructure.InMemoryProductsPersister{}
+var repositoryType = infrastructure.InMemoryProductsPersister{}
+var repository = repositoryType.New()
 var builder = productBuilder.New()
 var product = builder.Build()
 
