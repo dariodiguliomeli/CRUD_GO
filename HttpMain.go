@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"net/http"
 	"os"
 )
 
@@ -26,9 +27,22 @@ func loadEnv() {
 
 func Init(productsRepository products.InMemoryProductsPersister) *gin.Engine {
 	router := gin.Default()
+	router.Use(gin.Logger())
+	router.Use(authMiddleware())
 	api.Init(router, &productsRepository)
 	statusHandler(router)
 	return router
+}
+
+func authMiddleware() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		userToken := ctx.Request.Header.Get("Authorization")
+		apiToken := fmt.Sprintf("%s", os.Getenv("TOKEN"))
+		if userToken != apiToken {
+			ctx.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
+	}
 }
 
 func statusHandler(router *gin.Engine) gin.IRoutes {
