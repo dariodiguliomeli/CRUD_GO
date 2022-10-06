@@ -19,6 +19,7 @@ func TestCreateProductHandler(t *testing.T) {
 
 func TestCreateProductHandlerSequentialId(t *testing.T) {
 	setupSuite()
+
 	firstId := handler.Exec("Some name", "Some description", 23.45)
 	secondId := handler.Exec("Some name", "Some description", 23.45)
 
