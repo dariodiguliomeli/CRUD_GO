@@ -42,6 +42,17 @@ func TestAdd(t *testing.T) {
 	Assert(t, got, newProduct)
 }
 
+func TestDelete(t *testing.T) {
+	setupSuite()
+	newProduct := builder.WithId(1).Build()
+	repository.Add(newProduct)
+
+	id, _ := repository.Delete(newProduct.Id)
+
+	searchProduct, _ := repository.GetById(id)
+	Assert(t, searchProduct.Id, 0)
+}
+
 var repository = infrastructure.InMemoryProducts{}
 var builder = productBuilder.NewProduct()
 var product = builder.Build()
