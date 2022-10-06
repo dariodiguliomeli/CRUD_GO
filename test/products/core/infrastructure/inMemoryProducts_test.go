@@ -31,6 +31,17 @@ func TestGetAll(t *testing.T) {
 	Assert(t, len(products), 2)
 }
 
+func TestAdd(t *testing.T) {
+	setupSuite()
+	newProduct := builder.WithId(1).Build()
+
+	repository.Add(newProduct)
+
+	got, _ := repository.GetById(1)
+
+	Assert(t, got, newProduct)
+}
+
 var repository = infrastructure.InMemoryProducts{}
 var builder = productBuilder.NewProduct()
 var product = builder.Build()
