@@ -53,6 +53,18 @@ func TestDelete(t *testing.T) {
 	Assert(t, searchProduct.Id, 0)
 }
 
+func TestUpdate(t *testing.T) {
+	setupSuite()
+	productToUpdate := builder.WithName("Taza").Build()
+	repository.Add(productToUpdate)
+	productToUpdate.Name = "Plato"
+
+	updatedId, _ := repository.Update(productToUpdate)
+
+	updatedProduct, _ := repository.GetById(updatedId)
+	Assert(t, updatedProduct.Name, "Plato")
+}
+
 var repository = infrastructure.InMemoryProducts{}
 var builder = productBuilder.NewProduct()
 var product = builder.Build()
