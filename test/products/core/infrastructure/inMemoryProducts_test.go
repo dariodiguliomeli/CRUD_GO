@@ -1,10 +1,9 @@
 package infrastructure
 
 import (
-	domain "CRUD_GO/src/products/core/domain"
 	infrastructure "CRUD_GO/src/products/core/infrastructure"
+	productBuilder "CRUD_GO/test/products/core/domain"
 	"testing"
-	"time"
 )
 
 func TestNextId(t *testing.T) {
@@ -33,14 +32,8 @@ func TestGetAll(t *testing.T) {
 }
 
 var repository = infrastructure.InMemoryProducts{}
-var product = domain.Product{
-	Id:          1,
-	Name:        "test",
-	Description: "some description",
-	Price:       45.23,
-	CreatedAt:   time.Now(),
-	UpdatedAt:   time.Now(),
-}
+var builder = productBuilder.NewProduct()
+var product = builder.Build()
 
 func setupSuite() {
 	repository = infrastructure.InMemoryProducts{}
