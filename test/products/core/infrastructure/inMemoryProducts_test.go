@@ -3,21 +3,24 @@ package infrastructure
 import (
 	infrastructure "CRUD_GO/src/products/core/infrastructure"
 	productBuilder "CRUD_GO/test/products/core/domain"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestNextId(t *testing.T) {
+	assert := assert.New(t)
 	got := repository.NextId()
 
-	Assert(t, got, 1)
+	assert.Equal(got, 1)
 }
 
 func TestGetById(t *testing.T) {
+	assert := assert.New(t)
 	repository.Add(product)
 
 	got, _ := repository.GetById(product.Id)
 
-	Assert(t, got, product)
+	assert.Equal(got, product)
 }
 
 func TestGetAll(t *testing.T) {
