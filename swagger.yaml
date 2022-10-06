@@ -1,0 +1,72 @@
+swagger: "2.0"
+info:
+  title: Marketplace API
+  description: API to manage common marketplace
+  version: 1.0.0
+schemes:
+  - https
+paths:
+  /products:
+    get:
+      tags:
+        - Products
+      description: Get all products
+      summary: Get all
+      produces:
+        - application/json
+      responses:
+        "500":
+          description: Internal server error
+        "200":
+          description: OK
+          schema:
+            type: array
+            items:
+              properties:
+                id:
+                  type: integer
+                  description: The product ID.
+                  example: 1
+                username:
+                  type: string
+                  description: The product name.
+                  example: "Cup"
+                description:
+                  type: string
+                  description: The product description.
+                  example: "Some cup description"
+                price:
+                  type: number
+                  description: The price of the product.
+                  example: 23.45
+                createdAt:
+                  type: string
+                  description: The date the product was created.
+                  example: "Tue Nov 10 23:00:00 UTC 2009"
+                updatedAt:
+                  type: string
+                  description: The date the product was updated.
+                  example: "Tue Nov 10 23:00:00 UTC 2009"
+  /products/{id}:
+    get:
+      tags:
+        - Products
+      description: Get one product filtered by id
+      summary: Get by id
+      produces:
+        - application/json
+      parameters:
+        - in: path
+            name: id
+            required: true
+            schema:
+              type: array
+              items:
+                type: integer
+              minItems: 1
+              style: matrix
+              explode: true
+      responses:
+        "404":
+          description: "Product not found error"
+
