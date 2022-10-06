@@ -8,19 +8,17 @@ import (
 )
 
 func TestNextId(t *testing.T) {
-	assert := assert.New(t)
 	got := repository.NextId()
 
-	assert.Equal(got, 1)
+	assert.Equal(t, got, 1)
 }
 
 func TestGetById(t *testing.T) {
-	assert := assert.New(t)
 	repository.Add(product)
 
 	got, _ := repository.GetById(product.Id)
 
-	assert.Equal(got, product)
+	assert.Equal(t, got, product)
 }
 
 func TestGetAll(t *testing.T) {
@@ -31,7 +29,7 @@ func TestGetAll(t *testing.T) {
 
 	products := repository.GetAll()
 
-	Assert(t, len(products), 2)
+	assert.Equal(t, len(products), 2)
 }
 
 func TestAdd(t *testing.T) {
@@ -42,7 +40,7 @@ func TestAdd(t *testing.T) {
 
 	got, _ := repository.GetById(1)
 
-	Assert(t, got, newProduct)
+	assert.Equal(t, got, newProduct)
 }
 
 func TestDelete(t *testing.T) {
@@ -53,7 +51,7 @@ func TestDelete(t *testing.T) {
 	id, _ := repository.Delete(newProduct.Id)
 
 	searchProduct, _ := repository.GetById(id)
-	Assert(t, searchProduct.Id, 0)
+	assert.Equal(t, searchProduct.Id, 0)
 }
 
 func TestUpdate(t *testing.T) {
@@ -65,7 +63,7 @@ func TestUpdate(t *testing.T) {
 	updatedId, _ := repository.Update(productToUpdate)
 
 	updatedProduct, _ := repository.GetById(updatedId)
-	Assert(t, updatedProduct.Name, "Plato")
+	assert.Equal(t, updatedProduct.Name, "Plato")
 }
 
 var repository = infrastructure.InMemoryProductsPersister{}
