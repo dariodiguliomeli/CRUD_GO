@@ -18,7 +18,7 @@ type ProductResponse struct {
 	UpdatedAt   time.Time `json:"updatedAt"`
 }
 
-func initGetProductsHandler(products products.Products) func(context *gin.Context) {
+func initGetProductsHandler(products products.ProductsPersister) func(context *gin.Context) {
 	return func(context *gin.Context) {
 		handler := application2.GetAllProductsHandler{Products: products}
 		productsFound := handler.Exec()
@@ -30,7 +30,7 @@ func initGetProductsHandler(products products.Products) func(context *gin.Contex
 	}
 }
 
-func initGetProductByIdHandler(products products.Products) func(context *gin.Context) {
+func initGetProductByIdHandler(products products.ProductsPersister) func(context *gin.Context) {
 	return func(context *gin.Context) {
 		id, err := strconv.Atoi(context.Param("id"))
 		if err != nil {

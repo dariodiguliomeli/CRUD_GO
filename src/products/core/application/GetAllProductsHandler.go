@@ -5,7 +5,7 @@ import (
 )
 
 type GetAllProductsHandler struct {
-	Products products2.Products
+	Products products2.ProductsPersister
 }
 
 func (handler *GetAllProductsHandler) Exec() (products []products2.Product) {

@@ -13,7 +13,7 @@ type CreateProductRequest struct {
 	Price       float64 `json:"price" binding:"required"`
 }
 
-func initCreateProductHandler(products products.Products) func(context *gin.Context) {
+func initCreateProductHandler(products products.ProductsPersister) func(context *gin.Context) {
 	return func(context *gin.Context) {
 		handler := application.CreateProductHandler{Products: products}
 		var request CreateProductRequest

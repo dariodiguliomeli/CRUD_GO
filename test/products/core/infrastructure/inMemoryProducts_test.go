@@ -68,10 +68,10 @@ func TestUpdate(t *testing.T) {
 	Assert(t, updatedProduct.Name, "Plato")
 }
 
-var repository = infrastructure.InMemoryProducts{}
-var builder = productBuilder.NewProduct()
+var repository = infrastructure.InMemoryProductsPersister{}
+var builder = productBuilder.New()
 var product = builder.Build()
 
 func setupSuite() {
-	repository = infrastructure.InMemoryProducts{}
+	repository = infrastructure.InMemoryProductsPersister{}
 }

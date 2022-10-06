@@ -5,7 +5,7 @@ import (
 )
 
 type GetProductByIdHandler struct {
-	Products products2.Products
+	Products products2.ProductsPersister
 }
 
 func (handler *GetProductByIdHandler) Exec(id int) (product products2.Product, err error) {

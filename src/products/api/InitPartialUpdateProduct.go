@@ -14,7 +14,7 @@ type PartialUpdateProductRequest struct {
 	Price       float64 `json:"price"`
 }
 
-func initPartialUpdateProductHandler(products products.Products) func(context *gin.Context) {
+func initPartialUpdateProductHandler(products products.ProductsPersister) func(context *gin.Context) {
 	return func(context *gin.Context) {
 		var request PartialUpdateProductRequest
 		if err := context.BindJSON(&request); err != nil {

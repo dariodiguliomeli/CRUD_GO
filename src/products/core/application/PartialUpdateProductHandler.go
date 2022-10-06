@@ -7,7 +7,7 @@ import (
 )
 
 type PartialUpdateProductHandler struct {
-	Products products.Products
+	Products products.ProductsPersister
 }
 
 func (handler *PartialUpdateProductHandler) Exec(id int, name string, description string, price float64) (updatedId int, err error) {

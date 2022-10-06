@@ -14,7 +14,7 @@ type UpdateProductRequest struct {
 	Price       float64 `json:"price" binding:"required"`
 }
 
-func initUpdateProductHandler(products products.Products) func(context *gin.Context) {
+func initUpdateProductHandler(products products.ProductsPersister) func(context *gin.Context) {
 	return func(context *gin.Context) {
 		var request UpdateProductRequest
 		if err := context.BindJSON(&request); err != nil {

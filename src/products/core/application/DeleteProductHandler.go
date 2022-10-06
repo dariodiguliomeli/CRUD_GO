@@ -5,7 +5,7 @@ import (
 )
 
 type DeleteProductHandler struct {
-	Products products.Products
+	Products products.ProductsPersister
 }
 
 func (handler *DeleteProductHandler) Exec(id int) (deletedId int, err error) {

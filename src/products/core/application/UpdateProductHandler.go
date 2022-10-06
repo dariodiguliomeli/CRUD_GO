@@ -6,7 +6,7 @@ import (
 )
 
 type UpdateProductHandler struct {
-	Products products.Products
+	Products products.ProductsPersister
 }
 
 func (handler *UpdateProductHandler) Exec(id int, name string, description string, price float64) (updatedId int, err error) {

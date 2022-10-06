@@ -7,22 +7,22 @@ import (
 
 var nextId = 1
 
-type InMemoryProducts struct {
+type InMemoryProductsPersister struct {
 	Products []products.Product
 }
 
-func (repository *InMemoryProducts) NextId() (id int) {
+func (repository *InMemoryProductsPersister) NextId() (id int) {
 	id = nextId
 	nextId++
 	return
 }
 
-func (repository *InMemoryProducts) Add(product products.Product) (id int) {
+func (repository *InMemoryProductsPersister) Add(product products.Product) (id int) {
 	repository.Products = append(repository.Products, product)
 	return product.Id
 }
 
-func (repository *InMemoryProducts) GetById(id int) (product products.Product, err error) {
+func (repository *InMemoryProductsPersister) GetById(id int) (product products.Product, err error) {
 	for _, item := range repository.Products {
 		if item.Id == id {
 			return item, nil
@@ -32,11 +32,11 @@ func (repository *InMemoryProducts) GetById(id int) (product products.Product, e
 	return
 }
 
-func (repository *InMemoryProducts) GetAll() (products []products.Product) {
+func (repository *InMemoryProductsPersister) GetAll() (products []products.Product) {
 	return repository.Products
 }
 
-func (repository *InMemoryProducts) Delete(id int) (idDeleted int, err error) {
+func (repository *InMemoryProductsPersister) Delete(id int) (idDeleted int, err error) {
 	for i, item := range repository.Products {
 		if item.Id == id {
 			repository.Products = append(repository.Products[:i], repository.Products[i+1:]...)
@@ -47,7 +47,7 @@ func (repository *InMemoryProducts) Delete(id int) (idDeleted int, err error) {
 	return
 }
 
-func (repository *InMemoryProducts) Update(product products.Product) (updatedId int, err error) {
+func (repository *InMemoryProductsPersister) Update(product products.Product) (updatedId int, err error) {
 	for i, item := range repository.Products {
 		if item.Id == product.Id {
 			repository.Products[i] = product

@@ -1,6 +1,6 @@
 package products
 
-type Products interface {
+type ProductsPersister interface {
 	NextId() (id int)
 	GetById(id int) (product Product, err error)
 	GetAll() (products []Product)

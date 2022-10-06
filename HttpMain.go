@@ -11,7 +11,7 @@ import (
 
 func main() {
 	loadEnv()
-	productsRepository := products.InMemoryProducts{}
+	productsRepository := products.InMemoryProductsPersister{}
 	router := Init(productsRepository)
 	port := fmt.Sprintf(":%s", os.Getenv("API_PORT"))
 	run(router, port)
@@ -24,7 +24,7 @@ func loadEnv() {
 	}
 }
 
-func Init(productsRepository products.InMemoryProducts) *gin.Engine {
+func Init(productsRepository products.InMemoryProductsPersister) *gin.Engine {
 	router := gin.Default()
 	api.Init(router, &productsRepository)
 	statusHandler(router)

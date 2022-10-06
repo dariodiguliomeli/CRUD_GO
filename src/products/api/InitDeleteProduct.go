@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func initDeleteProductByIdHandler(products products.Products) func(context *gin.Context) {
+func initDeleteProductByIdHandler(products products.ProductsPersister) func(context *gin.Context) {
 	return func(context *gin.Context) {
 		id, err := strconv.Atoi(context.Param("id"))
 		if err != nil {

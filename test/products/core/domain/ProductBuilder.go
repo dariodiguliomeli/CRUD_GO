@@ -88,6 +88,6 @@ func fillDefaultFields(builder *productBuilder) {
 	}
 }
 
-func NewProduct() ProductBuilder {
+func New() ProductBuilder {
 	return &productBuilder{}
 }
